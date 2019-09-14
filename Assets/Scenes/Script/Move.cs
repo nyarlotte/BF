@@ -7,6 +7,7 @@ public class Move : MonoBehaviour {
     public float speed = 100.0f;
     Rigidbody rb;
     public bool CharacterMove = true;
+    public bool _Encount = false;
     public float x;
     public float z;
 

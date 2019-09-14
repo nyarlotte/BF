@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class GameManegement : MonoBehaviour {
 
     public GameObject character ;
-    public Serihu charcterSerihu;
+
     public enum Turn
     {
         Run,
@@ -36,6 +36,9 @@ public class GameManegement : MonoBehaviour {
 
     Image Fade;
 
+    // Script
+    public Move Move;
+    public Serihu Serihu;
 
     private void Awake()
     {
@@ -49,6 +52,7 @@ public class GameManegement : MonoBehaviour {
     void Start()
     {
         character = GameObject.FindGameObjectWithTag("Player");
+        Move = character.GetComponent<Move>();
 
         panel.SetActive(false);
         turn = Turn.Run;
@@ -113,22 +117,24 @@ public class GameManegement : MonoBehaviour {
     {
         int random = 0;
 
-        if (Input.GetKey("w") | Input.GetKey("s") | Input.GetKey("a") | Input.GetKey("d"))
-        {
-           //  random = Random.Range(0, 100);
-        }
+        if(Move._Encount == true) {
+            if (Input.GetKey("w") | Input.GetKey("s") | Input.GetKey("a") | Input.GetKey("d"))
+            {
+                 random = Random.Range(0, 100);
+            }
 
-        if (random > 97)
-        {
-            Debug.Log("敵が現れた");
-            turn = Turn.Battle;
-            Fade.enabled = true;
-            isFadeOut = true;
-            character.GetComponent<Status>().SavePosition();
+            if (random > 97)
+            {
+                Debug.Log("敵が現れた");
+                turn = Turn.Battle;
+                Fade.enabled = true;
+                isFadeOut = true;
+                character.GetComponent<Status>().SavePosition();
             
-            character.GetComponent<Move>().x = 0;
-            character.GetComponent<Move>().z = 0;
+                character.GetComponent<Move>().x = 0;
+                character.GetComponent<Move>().z = 0;
 
+            }
         }
     }
 
@@ -266,7 +272,7 @@ public class GameManegement : MonoBehaviour {
         panel.SetActive(true);
         character.transform.position = new Vector3(0, 0, 22);
         Text text = Scene[1].GetChild(0).gameObject.GetComponent<Text>();
-        text.text = charcterSerihu.SERIFU[ClickCount];
+        text.text = Serihu.SERIFU[ClickCount];
 
         if(ClickCount == 3)
         {

@@ -223,10 +223,3 @@ public class BattleManegment : MonoBehaviour {
     }
 
 }
-
-    
-
-
-
-
-
