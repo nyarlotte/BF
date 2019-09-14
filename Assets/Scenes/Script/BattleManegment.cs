@@ -230,7 +230,6 @@ public class BattleManegment : MonoBehaviour {
         _Player.transform.position = _Player.GetComponent<Status>().save;
         SceneManager.LoadScene("GameScene");
     }
-
 }
 
     
