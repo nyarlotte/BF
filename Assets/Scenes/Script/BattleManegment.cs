@@ -10,21 +10,21 @@ using Random = UnityEngine.Random;
 public class BattleManegment : MonoBehaviour {
 
     //GameObject
-    GameObject _Enemy;
-    List<GameObject> _Character = new List<GameObject>();
     GameObject _Player;
+    GameObject _Enemy;
     GameObject _Current;
     GameObject _Wait;
+    List<GameObject> _Character = new List<GameObject>();
     [SerializeField] GameObject _BattleMenu, _EscapeButton, _BattleButton;
 
     //Script
     [SerializeField] BattleMessage _BattleText;
 
     //UI
-    public Slider _PlayerHPSlider;
-    public Slider _EnemyHPSlider;
-    public Text PlayerHP_text;
-    public Text EnemyHP_text;
+    [SerializeField] Slider _PlayerHPSlider;
+    [SerializeField] Slider _EnemyHPSlider;
+    [SerializeField] Text _PlayerHP_Text;
+    [SerializeField] Text _EnemyHP_Text;
 
     //bool
     [SerializeField] bool _Same = false;
@@ -63,6 +63,7 @@ public class BattleManegment : MonoBehaviour {
             _Wait = _Character[0];
         } else {
             _Same = true;
+
             Set();
         }
         _BattleMenu.SetActive(false);
@@ -70,6 +71,7 @@ public class BattleManegment : MonoBehaviour {
         _EnemyHPSlider.maxValue = _Enemy.GetComponent<Status>().MaxHP;
 
         Slider();
+
         _IsFadeIn = true;
     }
 
@@ -98,6 +100,7 @@ public class BattleManegment : MonoBehaviour {
 
             if (_Alfa >= 1) {
                 _IsFadeOut = false;
+
                 BackScene();
             }
         }
@@ -106,8 +109,8 @@ public class BattleManegment : MonoBehaviour {
     void Slider() {
         _EnemyHPSlider.value = _Enemy.GetComponent<Status>().HP;
         _PlayerHPSlider.value = _Player.GetComponent<Status>().HP;
-        PlayerHP_text.text = _Player.GetComponent<Status>().Name + "Lv" + _Player.GetComponent<Status>().Lv + "HP" + _Player.GetComponent<Status>().HP + "/" + _Player.GetComponent<Status>().MaxHP;
-        EnemyHP_text.text = _Enemy.GetComponent<Status>().Name + "Lv" + _Enemy.GetComponent<Status>().Lv + "HP" + _Enemy.GetComponent<Status>().HP + "/" + _Enemy.GetComponent<Status>().MaxHP;
+        _PlayerHP_Text.text = _Player.GetComponent<Status>().Name + "Lv" + _Player.GetComponent<Status>().Lv + "HP" + _Player.GetComponent<Status>().HP + "/" + _Player.GetComponent<Status>().MaxHP;
+        _EnemyHP_Text.text = _Enemy.GetComponent<Status>().Name + "Lv" + _Enemy.GetComponent<Status>().Lv + "HP" + _Enemy.GetComponent<Status>().HP + "/" + _Enemy.GetComponent<Status>().MaxHP;
     }
 
     public void Menu(int i) {
@@ -116,11 +119,15 @@ public class BattleManegment : MonoBehaviour {
 
             case 1:
                 _BattleMenu.SetActive(true);
+
                 Set();
+
                 break;
 
             case 2:
+
                 Escape();
+
                 break;
         }
     }
@@ -157,6 +164,7 @@ public class BattleManegment : MonoBehaviour {
                 }
 
                 Change();
+
                 _BattleButton.SetActive(true);
                 _EscapeButton.SetActive(true);
                 break;
@@ -211,13 +219,14 @@ public class BattleManegment : MonoBehaviour {
         } else if (_Escape == 2) {
             _IsFadeOut = true;
         } else {
+
             Battle(3);
+
             _Escape++;
         }
     }
 
-
-    void BackScene() {//シーンの移動および元の位置に戻る
+    void BackScene() {  //シーンの移動および元の位置に戻る
         _Player.transform.position = _Player.GetComponent<Status>().save;
         SceneManager.LoadScene("GameScene");
     }
