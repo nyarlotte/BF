@@ -21,8 +21,8 @@ public class BattleManegment : MonoBehaviour {
     [SerializeField] BattleMessage _BattleText;
 
     //UI
-    public Slider EnemyHP;
-    public Slider PlayerHP;
+    public Slider _PlayerHPSlider;
+    public Slider _EnemyHPSlider;
     public Text PlayerHP_text;
     public Text EnemyHP_text;
 
@@ -66,8 +66,8 @@ public class BattleManegment : MonoBehaviour {
             Set();
         }
         _BattleMenu.SetActive(false);
-        EnemyHP.GetComponent<Slider>().maxValue = _Enemy.GetComponent<Status>().MaxHP;
-        PlayerHP.GetComponent<Slider>().maxValue = _Player.GetComponent<Status>().MaxHP;
+        _PlayerHPSlider.maxValue = _Player.GetComponent<Status>().MaxHP;
+        _EnemyHPSlider.maxValue = _Enemy.GetComponent<Status>().MaxHP;
 
         Slider();
         _IsFadeIn = true;
@@ -104,8 +104,8 @@ public class BattleManegment : MonoBehaviour {
     }
 
     void Slider() {
-        EnemyHP.GetComponent<Slider>().value = _Enemy.GetComponent<Status>().HP;
-        PlayerHP.GetComponent<Slider>().value = _Player.GetComponent<Status>().HP;
+        _EnemyHPSlider.value = _Enemy.GetComponent<Status>().HP;
+        _PlayerHPSlider.value = _Player.GetComponent<Status>().HP;
         PlayerHP_text.text = _Player.GetComponent<Status>().Name + "Lv" + _Player.GetComponent<Status>().Lv + "HP" + _Player.GetComponent<Status>().HP + "/" + _Player.GetComponent<Status>().MaxHP;
         EnemyHP_text.text = _Enemy.GetComponent<Status>().Name + "Lv" + _Enemy.GetComponent<Status>().Lv + "HP" + _Enemy.GetComponent<Status>().HP + "/" + _Enemy.GetComponent<Status>().MaxHP;
     }
