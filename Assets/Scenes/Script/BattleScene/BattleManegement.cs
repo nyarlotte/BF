@@ -7,8 +7,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
-public class BattleManegement : MonoBehaviour
-{
+public class BattleManegement : MonoBehaviour {
 
     //GameObject
     GameObject _Player, _Enemy;                                             //Player and enemy objects.
@@ -39,8 +38,7 @@ public class BattleManegement : MonoBehaviour
     float _Red, _Green, _Blue, _Alfa;                                       //パネルの色、不透明度を管理
     int _Escape;
 
-    void Awake()
-    {
+    void Awake() {
         _Enemy = (GameObject)Resources.Load("Slime");
         _Player = GameObject.FindGameObjectWithTag("Player");
 
@@ -58,21 +56,15 @@ public class BattleManegement : MonoBehaviour
         _Alfa = _Fade.color.a;
     }
 
-    void Start()
-    {
+    void Start() {
 
-        if (_Character[0].GetComponent<Status>().SP > _Character[1].GetComponent<Status>().SP)
-        {    //Decide the attack order according to the speed.
+        if (_Character[0].GetComponent<Status>().SP > _Character[1].GetComponent<Status>().SP) {    //Decide the attack order according to the speed.
             _Current = _Character[0];
             _Wait = _Character[1];
-        }
-        else if (_Character[0].GetComponent<Status>().SP < _Character[1].GetComponent<Status>().SP)
-        {
+        } else if (_Character[0].GetComponent<Status>().SP < _Character[1].GetComponent<Status>().SP) {
             _Current = _Character[1];
             _Wait = _Character[0];
-        }
-        else
-        {
+        } else {
             _Same = true;
 
             Set();
@@ -86,36 +78,30 @@ public class BattleManegement : MonoBehaviour
         _IsFadeIn = true;
     }
 
-    void Update()
-    {                                                         //Updateの中身が長くなるようならメソッドで分けてもよし
+    void Update() {                                                         //Updateの中身が長くなるようならメソッドで分けてもよし
 
-        if (_Current.tag == "Enemy")
-        {
+        if (_Current.tag == "Enemy") {
             ClickBattle(1);
         }
 
         Slider();
 
-        if (_IsFadeIn == true)
-        {                                            //シーン移動した際にフェードイン
+        if (_IsFadeIn == true) {                                            //シーン移動した際にフェードイン
             _Alfa -= _FadeSpeed;                                            //a)不透明度を徐々に下げる
             _Fade.color = new Color(_Red, _Green, _Blue, _Alfa);            //b)変更した不透明度パネルに反映する
 
-            if (_Alfa <= 0)
-            {                                               //c)完全に透明になったら処理を抜ける
+            if (_Alfa <= 0) {                                               //c)完全に透明になったら処理を抜ける
                 _IsFadeIn = false;
                 _Fade.enabled = false;                                      //d)パネルの表示をオフにする
             }
         }
 
-        if (_IsFadeOut == true)
-        {                                           //バトル終了時フェードアウト
+        if (_IsFadeOut == true) {                                           //バトル終了時フェードアウト
             _Fade.enabled = true;
             _Alfa += _FadeSpeed;
             _Fade.color = new Color(_Red, _Green, _Blue, _Alfa);
 
-            if (_Alfa >= 1)
-            {
+            if (_Alfa >= 1) {
                 _IsFadeOut = false;
 
                 BackScene();
@@ -123,19 +109,16 @@ public class BattleManegement : MonoBehaviour
         }
     }
 
-    void Slider()
-    {
+    void Slider() {
         _EnemyHPSlider.value = _Enemy.GetComponent<Status>().HP;
         _PlayerHPSlider.value = _Player.GetComponent<Status>().HP;
         _PlayerHP_Text.text = _Player.GetComponent<Status>().Name + "Lv" + _Player.GetComponent<Status>().Lv + "HP" + _Player.GetComponent<Status>().HP + "/" + _Player.GetComponent<Status>().MaxHP;
         _EnemyHP_Text.text = _Enemy.GetComponent<Status>().Name + "Lv" + _Enemy.GetComponent<Status>().Lv + "HP" + _Enemy.GetComponent<Status>().HP + "/" + _Enemy.GetComponent<Status>().MaxHP;
     }
 
-    public void ClickBattleMenu(int i)
-    {
+    public void ClickBattleMenu(int i) {
 
-        switch (i)
-        {
+        switch (i) {
 
             case 1:
                 _BattleMenu.SetActive(true);
@@ -152,22 +135,18 @@ public class BattleManegement : MonoBehaviour
         }
     }
 
-    void Set()
-    {
+    void Set() {
 
-        if (_Same == true)
-        {
+        if (_Same == true) {
             _Character = _Character.OrderBy(a => Guid.NewGuid()).ToList();
             _Current = _Character[0];
             _Wait = _Character[1];
         }
     }
 
-    public void ClickBattle(int i)
-    {
+    public void ClickBattle(int i) {
 
-        switch (i)
-        {
+        switch (i) {
 
             case 1:
                 _BattleMenu.SetActive(false);
@@ -175,8 +154,7 @@ public class BattleManegement : MonoBehaviour
                 _EscapeButton.SetActive(false);
                 int Damage = _Current.GetComponent<Status>().AT - _Wait.GetComponent<Status>().DF;
 
-                if (Damage <= 0)
-                {
+                if (Damage <= 0) {
                     Damage = 1;
                 }
 
@@ -184,8 +162,7 @@ public class BattleManegement : MonoBehaviour
                 _BattleText.SetMessage(_Wait.GetComponent<Status>().Name + "に" + Damage + "のダメージ");
                 Debug.Log(_Wait.GetComponent<Status>().Name + "に" + Damage + "のダメージ");
 
-                if (_Wait.GetComponent<Status>().HP <= 0)
-                {
+                if (_Wait.GetComponent<Status>().HP <= 0) {
                     Result();
                 }
 
@@ -206,33 +183,27 @@ public class BattleManegement : MonoBehaviour
         }
     }
 
-    void Change()
-    {
+    void Change() {
         GameObject end = _Current;
         _Current = _Wait;
         _Wait = end;
     }
 
-    void Result()
-    {
+    void Result() {
         _BattleText.SetMessage(_Wait.GetComponent<Status>().Name + "を倒した");
         Debug.Log(_Wait.GetComponent<Status>().Name + "を倒した");
 
-        if (_Wait.tag == "Player")
-        {
+        if (_Wait.tag == "Player") {
             Debug.Log("GameOver");
             _BattleText.SetMessage("Game Over");
             // SceneManager.LoadScene("GameOver");
-        }
-        else
-        {
+        } else {
             _Player.GetComponent<Status>().GET = _Player.GetComponent<Status>().GET + _Enemy.GetComponent<Status>().EXP;
             _Player.GetComponent<Status>().TOTAL_EXP += _Enemy.GetComponent<Status>().EXP;
             _Player.GetComponent<Status>().LevelUP -= _Enemy.GetComponent<Status>().EXP;
             int random = Random.Range(0, 255);
 
-            if (random >= 200)
-            {
+            if (random >= 200) {
                 _BattleText.SetMessage(_Wait.GetComponent<Status>().bag[0]._name + "をGetした");
                 Debug.Log(_Wait.GetComponent<Status>().bag[0]._name + "をGetした");
                 _Player.GetComponent<Status>().bag.Add(_Enemy.GetComponent<Status>().bag[0]);
@@ -243,20 +214,14 @@ public class BattleManegement : MonoBehaviour
         }
     }
 
-    public void ClickEscape()
-    {
+    public void ClickEscape() {
         int random = Random.Range(0, 10);
 
-        if (random > 7)
-        {
+        if (random > 7) {
             _IsFadeOut = true;
-        }
-        else if (_Escape == 2)
-        {
+        } else if (_Escape == 2) {
             _IsFadeOut = true;
-        }
-        else
-        {
+        } else {
 
             ClickBattle(3);
 
@@ -264,8 +229,7 @@ public class BattleManegement : MonoBehaviour
         }
     }
 
-    void BackScene()
-    {  //シーンの移動および元の位置に戻る
+    void BackScene() {  //シーンの移動および元の位置に戻る
         _Player.transform.position = _Player.GetComponent<Status>().save;
         SceneManager.LoadScene("GameScene");
     }

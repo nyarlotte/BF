@@ -80,8 +80,10 @@
     <Compile Include="Assets\Scenes\DetaBase\Item.cs" />
     <Compile Include="Assets\Scenes\DetaBase\ParameterTable.cs" />
     <Compile Include="Assets\Scenes\DetaBase\Serihu.cs" />
-    <Compile Include="Assets\Scenes\Script\BattleManegement.cs" />
-    <Compile Include="Assets\Scenes\Script\BattleMessage.cs" />
+    <Compile Include="Assets\Scenes\Script\BattleScene\BattleManegement.cs" />
+    <Compile Include="Assets\Scenes\Script\BattleScene\BattleMessage.cs" />
+    <Compile Include="Assets\Scenes\Script\BattleScene\UIManeger.cs" />
+    <Compile Include="Assets\Scenes\Script\CameraMovement.cs" />
     <Compile Include="Assets\Scenes\Script\Encount.cs" />
     <Compile Include="Assets\Scenes\Script\FadeController.cs" />
     <Compile Include="Assets\Scenes\Script\GameManegement.cs" />
