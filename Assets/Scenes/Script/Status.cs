@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Status : MonoBehaviour
 {
-    public BattleManegment BattleManegment;
+    public BattleManegement BattleManegement;
     public ParameterTable Parameter;
 
     [SerializeField] public string Name;
